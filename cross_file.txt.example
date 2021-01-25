@@ -1,0 +1,13 @@
+[binaries]
+prefix = '/path/to/cross/gcc/bin/arm-none-eabi-'
+c = prefix + 'gcc'
+cpp = prefix + 'g++'
+strip = prefix + 'strip'
+objcopy = prefix + 'objcopy'
+renode = 'renode'
+
+[host_machine]
+system     = 'linux'
+cpu_family = 'arm'
+cpu        = 'cortex-m0'
+endian     = 'little'

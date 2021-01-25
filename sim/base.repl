@@ -1,0 +1,3 @@
+include @base.py
+
+`python 'load_fw_or_die()'`

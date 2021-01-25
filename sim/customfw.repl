@@ -1,0 +1,73 @@
+flash: Memory.MappedMemory @ sysbus 0x08000000
+    size: 0x10000
+
+systemMemory: Memory.MappedMemory @ sysbus 0x1FF00000
+    size: 0x10000
+
+sram: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x2000
+
+nvic: IRQControllers.NVIC @ sysbus 0xE000E000
+    priorityMask: 0xFF
+    systickFrequency: 72000000
+    IRQ -> cpu@0
+
+cpu: CPU.CortexM @ sysbus
+    cpuType: "cortex-m0"
+    nvic: nvic
+
+exti: IRQControllers.EXTI @ sysbus 0x40010400
+    0 -> nvic@5
+    2 -> nvic@6
+    4 -> nvic@7
+
+syscfg: Miscellaneous.STM32_SYSCFG @ sysbus 0x40010000
+    [0-15] -> exti@[0-15]
+
+rtc: STM32L_RTC @ sysbus <0x40002800, +0x400>
+    -> exti@20
+
+timer2: Timers.STM32_Timer @ sysbus <0x40000000, +0x400>
+    -> nvic@15
+    frequency: 10000000
+    initialLimit: 0xFFFF
+
+timer6: Timers.STM32_Timer @ sysbus <0x40001000, +0x400>
+    -> nvic@17
+    frequency: 10000000
+    initialLimit: 0xFFFF
+
+lptimer: Timers.STM32_Timer @ sysbus <0x40007C00, +0x400>
+    -> nvic@13
+    frequency: 10000000
+    initialLimit: 0xFFFF
+
+uart1: UART.STM32_UART @ sysbus <0x40013800, +0x400>
+    -> nvic@27
+uart2: UART.STM32_UART @ sysbus <0x40004400, +0x400>
+    -> nvic@28
+
+gpioPortA: GPIOPort.STM32F4GPIOPort @ sysbus <0x50000000, +0x400>
+    // TODO
+    modeResetValue: 0xEBFFFCFF
+    pullUpPullDownResetValue: 0x24000000
+
+gpioPortB: GPIOPort.STM32F4GPIOPort @ sysbus <0x50000400, +0x400>
+    // TODO
+    modeResetValue: 0xFFFFFFFF
+    pullUpPullDownResetValue: 0x00000000
+
+gpioPortC: GPIOPort.STM32F4GPIOPort @ sysbus <0x50000800, +0x400>
+    // TODO
+    modeResetValue: 0xFFFFFFFF
+    pullUpPullDownResetValue: 0x00000000
+
+gpioPortD: GPIOPort.STM32F4GPIOPort @ sysbus <0x50000C00, +0x400>
+    // TODO
+    modeResetValue: 0xFFFFFFFF
+    pullUpPullDownResetValue: 0x00000000
+
+sysbus:
+    init:
+        ApplySVD @./STM32L051x.svd
+        Tag <0x40021000 4> "RCC_CR" 0x2020202 // Might not be correct?

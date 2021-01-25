@@ -1,0 +1,39 @@
+include @base.repl
+
+#using sysbus
+
+mach create
+machine LoadPlatformDescription @customfw.repl
+
+#sysbus.cpu PerformanceInMips 100
+
+# This is required when loading raw firmware binaries instead of an ELF file,
+# since it can only grab metadata from the ELF.
+sysbus.cpu VectorTableOffset 0x08000000
+
+#showAnalyzer sysbus.uart2
+
+# Load debug symbols from ELF
+sysbus LoadSymbolsFrom @../build/motosh
+#sysbus.cpu LogFunctionNames True
+
+# Enable logging for all peripherals,
+sysbus LogAllPeripheralsAccess
+
+# These spam a lot, disable logging
+sysbus LogPeripheralAccess sysbus.nvic false
+sysbus LogPeripheralAccess sysbus.lptimer false
+sysbus LogPeripheralAccess sysbus.timer2 false
+sysbus LogPeripheralAccess sysbus.timer6 false
+
+# Start remote GDB server at localhost:3333
+machine StartGdbServer 3333
+
+macro reset
+"""
+	sysbus LoadBinary $bin 0x08000000
+"""
+
+runMacro $reset
+
+emulation RunFor @1

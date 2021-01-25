@@ -1,0 +1,3 @@
+thirdparty/libopencm3/
+cross_file.txt
+sim/fw/motosh.bin
