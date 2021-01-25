@@ -10,6 +10,7 @@ specific conditions (also known as `Moto Actions` or `Moto Gestures`).
 - STM32L0x1 family reference manual: [pdf](https://www.st.com/resource/en/reference_manual/dm00108282-ultralowpower-stm32l0x1-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
 - BMI160 datasheet: [pdf](https://www.mouser.com/datasheet/2/783/BST-BMI160-DS000-1509569.pdf)  
 - AK09912C datasheet: [pdf](https://www.digikey.com/htmldatasheets/production/1746545/0/0/1/AK09912.pdf)
+- [Wiki pages](https://github.com/Ristovski/motosh-fw/wiki/)
 
 The sensorhub communicates with the kernel via SPI - the driver can be found [here](https://github.com/MotorolaMobilityLLC/kernel-msm/tree/nougat-7.0.0-release-potter-n/drivers/misc/stml0xx).  
 The Android HAL and accompanying `motosh` binary (used for flashing firmware) are released by Motorola
