@@ -64,9 +64,18 @@ This will produce the following two files:
 `motosh` - ELF file containing symbols - useful for debugging under `gdb`  
 `motosh.bin` - pure binary version generated with `objcopy -O binary motosh motosh.bin`
 
+## Tools
+![1616692920](https://user-images.githubusercontent.com/994445/112535247-597a2300-8dac-11eb-8107-4c69947e6bc3.png)
+![1616700358](https://user-images.githubusercontent.com/994445/112535264-5da64080-8dac-11eb-9daa-a3827145b95d.png)
+
+
 ## Simulating
 With [Renode](https://renode.io/) it is possible to simulate the official Moto sensorhub firmware (included at `fw/sensorhubfw.bin`)
 to the point where it boots and attempts to communicate with the (non-existent) sensors.
+
+
+![out](https://user-images.githubusercontent.com/994445/112535414-90503900-8dac-11eb-969c-49ed733d7c75.gif)
+
 
 There are two models included in the `sim` directory, `motosh.{repl,resc}` - which is meant to be as close to the official MCU as possible
 and `customfw.{repl,resc}` - meant to be used as a "playground" for testing the custom firmware and general accuracy of the Renode simulator.
