@@ -62,7 +62,7 @@ def dump_peripherals(device):
 			base_addr = peripheral_base_addr,
 			end_addr = peripheral_end_addr,
 			size = size,
-			desc = peripheral.description
+			desc = peripheral.description if hasattr(peripheral, 'description') else ""
 		))
 
 def dump_registers(device):
@@ -83,7 +83,7 @@ def dump_registers(device):
 		peripheral_end_addr = peripheral_base_addr + size
 
 		# Print peripheral device
-		PRINT_GREEN("{} @ 0x{:X} - 0x{:X} [+0x{:X}] [{}]".format(peripheral.name, peripheral_base_addr, peripheral_end_addr, size, peripheral.description))
+		PRINT_GREEN("{} @ 0x{:X} - 0x{:X} [+0x{:X}] [{}]".format(peripheral.name, peripheral_base_addr, peripheral_end_addr, size, peripheral.description if hasattr(peripheral, 'description') else ""))
 
 		maxlen = 0
 		"""for register in peripheral.registers:
@@ -102,7 +102,7 @@ def dump_registers(device):
 				if size > maxlen:
 					maxlen = size + 8
 
-			PRINT_YELLOW("\t {}:{} @ 0x{:X} (+0x{}) ({})".format(peripheral.name, register.name, abs_address, offset, register.description).expandtabs(2))
+			PRINT_YELLOW("\t {}:{} @ 0x{:X} (+0x{}) ({})".format(peripheral.name, register.name, abs_address, offset, register.description if hasattr(register, 'description') else "").expandtabs(2))
 
 			for field in register.fields:
 				full_name = "{}:{}:{}".format(peripheral.name, register.name, field.name)
@@ -117,7 +117,7 @@ def dump_registers(device):
 					byte_offset = byte_offset,
 					bit_offset = bit_offsets,
 					field_offset = field_offset,
-					desc = field.description
+					desc = field.description if hasattr(field, 'description') else ""
 				).expandtabs(2))
 
 			print("")
